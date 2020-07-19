@@ -1,0 +1,47 @@
+{
+  "name": "newman-run",
+  "version": "1.0.0",
+  "description": "Run multiple postman collections along with predefined configs using single feed file. Reduces commandline arguments since reporting (allure, json, cli and html) is embeded internally",
+  "main": "index.js",
+  "bin": {
+    "newman-run": "./bin/newman-run.js"
+  },
+  "dependencies": {
+    "allure-commandline": "^2.13.0",
+    "chalk": "^4.1.0",
+    "clear": "^0.1.0",
+    "figlet": "^1.5.0",
+    "inquirer": "^7.3.2",
+    "lodash": "^4.17.19",
+    "newman": "^5.1.2",
+    "newman-reporter-allure": "^1.0.7",
+    "newman-reporter-html": "^1.0.5",
+    "simple-git": "^2.13.2",
+    "touch": "^3.1.0",
+    "yargs": "^15.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nareshnavinash/newman-run.git"
+  },
+  "keywords": [
+    "newman",
+    "postman",
+    "runner",
+    "collections",
+    "js",
+    "cli",
+    "configs",
+    "reporter",
+    "allure"
+  ],
+  "author": "Naresh Sekar",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nareshnavinash/newman-run/issues"
+  },
+  "homepage": "https://github.com/nareshnavinash/newman-run#readme"
+}
