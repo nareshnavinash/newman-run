@@ -160,11 +160,19 @@ If you have environment file to be passed, you can conviniently do the same.
 
 ```
 newman-run -c <./collection/<example_collection.json> -e <./environment/<example_env.json>
-```
 or
-```
 newman-run -c <https://www.getpostman.com/collections/3423refwef-dfdfwfw2322-6878-eb58u> -e <./environment/<example_env.json>
 ```
+
+You can also specifiy both the feed file as well as collections at the same time.
+
+```
+newman-run -f <./feed/<feed_file.json> -c <https://www.getpostman.com/collections/3423refwef-dfdfwfw2322-6878-eb58u>
+or
+newman-run -f <./feed/<feed_file.json> -c <https://www.getpostman.com/collections/3423refwef-dfdfwfw2322-6878-eb58u> -e <./environment/<example_env.json>
+```
+
+This allows us to run any collection dynamically along with our set of collections.
 
 The above will take care the reporting part and we don't need to mention about that from the command line. Along with allure reports, newman's default CLI, HTML and JSON reports are added which can be found at `reports/` path. For sophesticated classification, reports for each collection is isolated with different name. If needed JSON and HTML files can be pushed to S3 for further processing or to have a record.
 
