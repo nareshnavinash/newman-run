@@ -189,14 +189,14 @@ npm run clean-report
 ```
 
 ## Jenkins Integration with Docker images
-Get any of the linux with cypress docker image as the slaves in jenkins and use the same for executing the UI automation with this framework (Sample docker image - `https://hub.docker.com/r/postman/newman/`). From the jenkins bash Execute the following to get the testcases to run,
+Get any of the linux with cypress docker image as the slaves in jenkins and use the same for executing the UI automation with this framework (Sample docker image - `https://hub.docker.com/r/postman/newman/`). From the jenkins bash Execute the following to get the testcases to run (Provided newman-run is added to the package.json dependencies),
 ```
 #!/bin/bash -l
 npm list
 ls
 cd <path_to_the_project>
 npm install
-npm run test -- <feed_file> <or custom run option>
+newman-run -f <./feed/<feed_file.json>
 ```
 
 In Jenkins pipeline, try to add the following snippet to execute the tests,
@@ -208,7 +208,7 @@ pipeline {
             steps {
                 sh 'cd project/'
                 sh 'npm install'
-                sh 'npm run test -- <feed_file>' # or custom methods
+                sh 'newman-run -f <./feed/<feed_file.json>' # or different files
             }
         }
     }
