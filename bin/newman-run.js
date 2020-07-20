@@ -11,10 +11,14 @@ const yargs = require("yargs");
 const { option } = require('yargs');
 var feedFilePath = ""
 
-
+clear()
 console.log(
     chalk.rgb(220, 120, 60)(
-        figlet.textSync('Newman-Run', { horizontalLayout: 'full' })
+        figlet.textSync('Newman-Run', { 
+            font: 'Doom', 
+            horizontalLayout: 'full', 
+            whitespaceBreak: true 
+        })
     )
 );
 
@@ -24,6 +28,9 @@ const options = yargs
         .argv
 
 feedFilePath = options.feed
-console.log('Feed file taken is: ' + feedFilePath);
+const NC = new NewmanConfig(feedFilePath)
 
-new NewmanConfig(feedFilePath)
+if (feedFilePath != undefined) {
+    console.log('Feed file taken is: ' + feedFilePath);
+    NC.looprun()
+}
