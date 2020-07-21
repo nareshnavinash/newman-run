@@ -177,6 +177,9 @@ This allows us to run any collection dynamically along with our set of collectio
 The above will take care the reporting part and we don't need to mention about that from the command line. Along with allure reports, newman's default CLI, HTML and JSON reports are added which can be found at `reports/` path. For sophesticated classification, reports for each collection is isolated with different name. If needed JSON and HTML files can be pushed to S3 for further processing or to have a record.
 
 
+### **NOTE:-**
+We need to give the file path along with the current working directory i.e., along with `./` symbol. This ensures that the proper file path is given and its used to compute the relative path in the code.
+
 ## Allure
 To open the allure results,
 ```
