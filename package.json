@@ -1,6 +1,6 @@
 {
   "name": "newman-run",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Run multiple postman collections along with predefined configs using single feed file. Reduces commandline arguments since reporting (allure, json, cli and html) is embeded internally",
   "main": "index.js",
   "bin": {
@@ -15,6 +15,7 @@
     "newman": "^5.1.2",
     "newman-reporter-allure": "^1.0.7",
     "newman-reporter-html": "^1.0.5",
+    "rimraf": "^3.0.2",
     "yargs": "^15.4.1"
   },
   "scripts": {
