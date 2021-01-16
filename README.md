@@ -192,13 +192,10 @@ We need to give the file path along with the current working directory i.e., alo
 ## Allure
 To open the allure results,
 ```
-npm run serve-allure
+allure serve reports/allure
 ```
+To install allure follow https://docs.qameta.io/allure/ with your respective machine.
 
-To clear the all the report files from results directory,
-```
-npm run clean-report
-```
 
 ## Jenkins Integration with Docker images
 Get any of the linux with cypress docker image as the slaves in jenkins and use the same for executing the UI automation with this framework (Sample docker image - `https://hub.docker.com/r/postman/newman/`). From the jenkins bash Execute the following to get the testcases to run (Provided newman-run is added to the package.json dependencies),
