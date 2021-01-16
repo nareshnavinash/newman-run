@@ -30,6 +30,7 @@ const options = yargs
         .option("c", { alias: "collection", describe: "Collection file path file path", type: "string"})
         .option("e", { alias: "environment", describe: "Environment file path file path", type: "string"})
         .option("r", { alias: "remove", describe: "To remove the files from reporting directory"})
+        .option("v", { alias: "version", describe: "Current version for the newman-run package"})
         .check(argv => { if(argv.f == undefined && argv.c == undefined && argv.r == undefined) { console.log(file_error_message); return false } else { return true }})
         .argv
 
@@ -37,6 +38,9 @@ const NC = new NewmanConfig()
 
 if (options.remove) {
     NC.clearResultsFolder()
+}
+if (options.version) {
+    console.log(version)
 }
 if (options.feed != undefined && options.collection == undefined && options.environment == undefined) {
     NC.looprun(options.feed)
