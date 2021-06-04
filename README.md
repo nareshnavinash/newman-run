@@ -150,26 +150,16 @@ To support the basic `newman` functionality, the `newman-run` command allows you
 newman-run -c <./collection/<example_collection.json>
 ```
 
-If your collection file is available as an URL (such as from our Cloud API service), Newman-Run can fetch your file and run it as well.
-
-```
-newman-run -c <https://www.getpostman.com/collections/3423refwef-dfdfwfw2322-6878-eb55-7943-sadfasadfd-JsLv>
-```
-
 If you have environment file to be passed, you can conviniently do the same.
 
 ```
 newman-run -c <./collection/<example_collection.json> -e <./environment/<example_env.json>
-or
-newman-run -c <https://www.getpostman.com/collections/3423refwef-dfdfwfw2322-6878-eb58u> -e <./environment/<example_env.json>
 ```
 
 You can also specifiy both the feed file as well as collections at the same time.
 
 ```
-newman-run -f <./feed/<feed_file.json> -c <https://www.getpostman.com/collections/3423refwef-dfdfwfw2322-6878-eb58u>
-or
-newman-run -f <./feed/<feed_file.json> -c <https://www.getpostman.com/collections/3423refwef-dfdfwfw2322-6878-eb58u> -e <./environment/<example_env.json>
+newman-run -f <./feed/<feed_file.json> -c <./collection/<example_collection.json>
 ```
 
 This allows us to run any collection dynamically along with our set of collections.
@@ -182,8 +172,6 @@ In order to remove the report files that are generated in the previous run, run 
 
 ```
 newman-run -r -f <./feed/<feed_file.json>
-or
-newman-run -r -f <./feed/<feed_file.json> -c <https://www.getpostman.com/collections/3423refwef-dfdfwfw2322-6878-eb58u> -e <./environment/<example_env.json>
 ```
 
 ### **NOTE:-**
