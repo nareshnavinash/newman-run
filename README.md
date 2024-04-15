@@ -50,7 +50,7 @@ This package is aimed at resolving the above particular issue along with allure 
 
 ## Supports
 * Multiple collections run in single shot
-* Allure reports along with newman's default CLI, HTML & JSON
+* Allure reports along with newman's default CLI, HTML, HTMLEXTRA & JSON
 * Jenkins Integration
 * Docker Execution
 
@@ -141,6 +141,14 @@ newman-run -f <Feed_file_which_contains_input_collections>
 
 Now as you can see, you can specify N number of environment combinations with the same collection file or different collection file. All these will run in one shot and we can have a collated result view in the allure.
 
+#### A/Synchronous mode
+
+By default, the collections are executed asynchronously via the mechanism of Javascript's callback functions: in this way the collections are executed interleaved, all in parallel, without respecting the order in which the collections are defined in the runs.json file.
+By specifying the '-s' or '--synchronous' option, the system will execute all calls in order one collection at a time. E.g. first all calls from collection 1, then all calls from collection 2, etc. always in the order of definition within the collection. As newman would do by default.
+
+```
+newman-run -s -f <./feed/<feed_file.json>
+```
 
 ### To achieve basic newman functionality along with reports
 
@@ -164,7 +172,7 @@ newman-run -f <./feed/<feed_file.json> -c <./collection/<example_collection.json
 
 This allows us to run any collection dynamically along with our set of collections.
 
-The above will take care the reporting part and we don't need to mention about that from the command line. Along with allure reports, newman's default CLI, HTML and JSON reports are added which can be found at `reports/` path. For sophesticated classification, reports for each collection is isolated with different name. If needed JSON and HTML files can be pushed to S3 for further processing or to have a record.
+The above will take care the reporting part and we don't need to mention about that from the command line. Along with allure reports, newman's default CLI, HTML, HTMLEXTRA and JSON reports are added which can be found at `reports/` path. For sophesticated classification, reports for each collection is isolated with different name. If needed JSON and HTML files can be pushed to S3 for further processing or to have a record.
 
 ### Remove previous run report files
 
