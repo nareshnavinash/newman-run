@@ -173,6 +173,11 @@ newman-run -f <./feed/<feed_file.json> -c <./collection/<example_collection.json
 This allows us to run any collection dynamically along with our set of collections.
 
 The above will take care the reporting part and we don't need to mention about that from the command line. Along with allure reports, newman's default CLI, HTML, HTMLEXTRA and JSON reports are added which can be found at `reports/` path. For sophesticated classification, reports for each collection is isolated with different name. If needed JSON and HTML files can be pushed to S3 for further processing or to have a record.
+You can configure the list of reporters to use:
+
+```
+newman-run -f <./feed/<feed_file.json> -R cli html htmlextra json allure
+```
 
 ### Remove previous run report files
 
