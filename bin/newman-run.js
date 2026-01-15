@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const NewmanConfig = require('../lib/core')
-version = require('../package.json').version
+const version = require('../package.json').version
 const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
