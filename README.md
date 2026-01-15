@@ -50,8 +50,8 @@ This package is aimed at resolving the above particular issue along with allure 
 
 ## Supports
 * Multiple collections run in single shot
-* Allure reports along with newman's default CLI, HTML, HTMLEXTRA & JSON
-* Jenkins Integration
+* Allure reports along with newman's default CLI, HTML, HTMLEXTRA, JSON & JUnit
+* Jenkins Integration (with JUnit XML reports)
 * Docker Execution
 * Cross-platform (Windows, macOS, Linux)
 
@@ -218,8 +218,10 @@ The above will take care the reporting part and we don't need to mention about t
 You can configure the list of reporters to use:
 
 ```
-newman-run -f <./feed/<feed_file.json> -R cli html htmlextra json allure
+newman-run -f <./feed/<feed_file.json> -R cli html htmlextra json allure junit
 ```
+
+By default, all reporters are enabled: cli, html, htmlextra, json, allure, and junit. The JUnit XML reports are particularly useful for CI/CD integration with Jenkins and other tools that consume JUnit test results.
 
 ### Advanced Newman Options
 
