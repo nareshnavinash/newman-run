@@ -38,7 +38,7 @@ const yargs = require("yargs");
 	const NC = new NewmanConfig(options.reporters)
 
 	if (options.remove) {
-		NC.clearResultsFolder()
+		await NC.clearResultsFolder()
 	}
 	if (options.version) {
 		console.log(version)
