@@ -1,23 +1,26 @@
 {
   "name": "newman-run",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Run multiple postman collections along with predefined configs using single feed file. Reduces commandline arguments since reporting (allure, json, cli and html) is embeded internally",
   "main": "index.js",
   "bin": {
     "newman-run": "./bin/newman-run.js"
   },
+  "engines": {
+    "node": ">=16"
+  },
   "dependencies": {
-    "allure-commandline": "^2.13.0",
-    "chalk": "^4.1.0",
+    "allure-commandline": "^2.36.0",
+    "chalk": "^4.1.2",
     "clear": "^0.1.0",
-    "figlet": "^1.5.0",
-    "inquirer": "^7.3.2",
-    "newman": "^5.3.2",
-    "newman-reporter-allure": "^1.0.7",
+    "figlet": "^1.8.0",
+    "inquirer": "^8.2.6",
+    "newman": "^6.2.1",
+    "newman-reporter-allure": "^3.4.3",
     "newman-reporter-html": "^1.0.5",
-    "newman-run": "^1.2.3",
-    "rimraf": "^3.0.2",
-    "yargs": "^15.4.1"
+    "newman-reporter-htmlextra": "^1.23.1",
+    "rimraf": "^5.0.10",
+    "yargs": "^17.7.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
