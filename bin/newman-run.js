@@ -30,13 +30,14 @@ const yargs = require("yargs");
 			.option("e", { alias: "environment", describe: "Environment file path", type: "string"})
 			.option("d", { alias: "iteration-data", describe: "Iteration data file path (CSV/JSON) for data-driven testing", type: "string"})
 			.option("s", { alias: "synchronous", describe: "Run collections in sync way. Async by default", type: "string"})
+			.option("p", { alias: "parallel", describe: "Max parallel collections to run (0 = unlimited)", type: "number", default: 0})
 			.option("r", { alias: "remove", describe: "To remove the files from reporting directory"})
 			.option("R", { alias: "reporters", describe: "To override reporters list", type: "array"})
 			.option("v", { alias: "version", describe: "Current version for the newman-run package"})
 			.check(argv => { if(argv.f == undefined && argv.c == undefined && argv.r == undefined) { console.log(file_error_message); return false } else { return true }})
 			.argv
 
-	const NC = new NewmanConfig(options.reporters)
+	const NC = new NewmanConfig(options.reporters, { concurrency: options.parallel })
 
 	if (options.remove) {
 		await NC.clearResultsFolder()

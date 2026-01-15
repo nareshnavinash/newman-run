@@ -56,7 +56,7 @@ This package is aimed at resolving the above particular issue along with allure 
 
 
 ## Pending
-* Need to add multi-thread run. (To parallelize the test run **Help Needed**)
+* (Currently no pending features)
 
 
 ## Installation
@@ -171,12 +171,25 @@ Now as you can see, you can specify N number of environment combinations with th
 
 #### A/Synchronous mode
 
-By default, the collections are executed asynchronously via the mechanism of Javascript's callback functions: in this way the collections are executed interleaved, all in parallel, without respecting the order in which the collections are defined in the runs.json file.
-By specifying the '-s' or '--synchronous' option, the system will execute all calls in order one collection at a time. E.g. first all calls from collection 1, then all calls from collection 2, etc. always in the order of definition within the collection. As newman would do by default.
+By default, the collections are executed asynchronously (in parallel). By specifying the '-s' or '--synchronous' option, the system will execute all collections in order, one at a time.
 
 ```
 newman-run -s -f <./feed/<feed_file.json>
 ```
+
+#### Parallel Execution with Concurrency Control
+
+You can control how many collections run in parallel using the `-p` or `--parallel` option. This is useful when you want to limit resource usage or avoid overwhelming an API:
+
+```
+# Run maximum 3 collections at a time
+newman-run -f <./feed/<feed_file.json> -p 3
+
+# Run 2 collections at a time
+newman-run -f <./feed/<feed_file.json> --parallel 2
+```
+
+By default (`-p 0`), all collections run in parallel with no limit. Using `-s` for synchronous mode is equivalent to `-p 1`.
 
 ### To achieve basic newman functionality along with reports
 
