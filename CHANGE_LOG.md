@@ -1,4 +1,24 @@
 ## 15 January, 2026
+### Version 1.6.0
+#### New Features
+* Added iteration data support (-d flag) for data-driven testing
+* Added parallel execution with concurrency control (-p flag)
+* Added Windows/cross-platform support
+* Added advanced Newman options: globals, timeout, timeoutRequest, timeoutScript, delayRequest, bail, folder
+* Added JUnit reporter for CI/CD integration (reports/junit/)
+* Added feed file schema validation with clear error messages
+* Added improved progress output with collection count and execution time
+
+#### Bug Fixes
+* Fixed rimraf v5 API breaking change (async/Promise-based)
+* Fixed global variable leak in CLI entry point
+* Added proper exit codes for CI/CD (exit 1 on test failures)
+
+#### Improvements
+* Test run summary with pass/fail counts displayed at the end
+* All Newman options can be specified per-run in feed file
+* Global CLI options merge with per-run options (per-run takes precedence)
+
 ### Version 1.5.0
 * Updated Newman from v5.3.2 to v6.2.1 (breaking: requires Node.js >= 16)
 * Updated newman-reporter-allure from v1.0.7 to v3.4.3 (new Allure Framework version)
