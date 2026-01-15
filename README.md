@@ -50,14 +50,14 @@ This package is aimed at resolving the above particular issue along with allure 
 
 ## Supports
 * Multiple collections run in single shot
-* Allure reports along with newman's default CLI, HTML, HTMLEXTRA & JSON
-* Jenkins Integration
+* Allure reports along with newman's default CLI, HTML, HTMLEXTRA, JSON & JUnit
+* Jenkins Integration (with JUnit XML reports)
 * Docker Execution
+* Cross-platform (Windows, macOS, Linux)
 
 
 ## Pending
-* Need to handle tests with iteration data.
-* Need to add multi-thread run. (To parallelize the test run **Help Needed**)
+* (Currently no pending features)
 
 
 ## Installation
@@ -111,6 +111,31 @@ The feed file is the core structure for this package to function. In the feed fi
 
 If we have only collections that need to be run as part of the test, then have `collection` alone. If we have collection and environment files, then we need to specify both `collection` and `environment` in json format.
 
+#### Iteration Data (Data-Driven Testing)
+
+You can also specify iteration data files (CSV or JSON) for data-driven testing:
+
+```
+{
+    "runs":[
+        {
+            "collection": "./collections/test_scripts.postman_collection.json",
+            "iterationData": "./data/test_data.csv"
+        },
+        {
+            "collection": "./collections/api_tests.postman_collection.json",
+            "environment": "./environment/test_environment.json",
+            "iterationData": "./data/api_data.json"
+        }
+    ]
+}
+```
+
+For single collection runs, you can use the `-d` flag:
+```
+newman-run -c ./collection/test.json -d ./data/test_data.csv
+```
+
 When we initiate the tests, the `runs` array will be iterated and all the tests will be run using `newman` package. 
 
 Ideally we should have the postman collection link as the feed file input, this gives us the leverage of modifying the tests via postman without touching the core framework. The ideal feed file will be,
@@ -147,12 +172,25 @@ Now as you can see, you can specify N number of environment combinations with th
 
 #### A/Synchronous mode
 
-By default, the collections are executed asynchronously via the mechanism of Javascript's callback functions: in this way the collections are executed interleaved, all in parallel, without respecting the order in which the collections are defined in the runs.json file.
-By specifying the '-s' or '--synchronous' option, the system will execute all calls in order one collection at a time. E.g. first all calls from collection 1, then all calls from collection 2, etc. always in the order of definition within the collection. As newman would do by default.
+By default, the collections are executed asynchronously (in parallel). By specifying the '-s' or '--synchronous' option, the system will execute all collections in order, one at a time.
 
 ```
 newman-run -s -f <./feed/<feed_file.json>
 ```
+
+#### Parallel Execution with Concurrency Control
+
+You can control how many collections run in parallel using the `-p` or `--parallel` option. This is useful when you want to limit resource usage or avoid overwhelming an API:
+
+```
+# Run maximum 3 collections at a time
+newman-run -f <./feed/<feed_file.json> -p 3
+
+# Run 2 collections at a time
+newman-run -f <./feed/<feed_file.json> --parallel 2
+```
+
+By default (`-p 0`), all collections run in parallel with no limit. Using `-s` for synchronous mode is equivalent to `-p 1`.
 
 ### To achieve basic newman functionality along with reports
 
@@ -180,7 +218,66 @@ The above will take care the reporting part and we don't need to mention about t
 You can configure the list of reporters to use:
 
 ```
-newman-run -f <./feed/<feed_file.json> -R cli html htmlextra json allure
+newman-run -f <./feed/<feed_file.json> -R cli html htmlextra json allure junit
+```
+
+By default, all reporters are enabled: cli, html, htmlextra, json, allure, and junit. The JUnit XML reports are particularly useful for CI/CD integration with Jenkins and other tools that consume JUnit test results.
+
+### Advanced Newman Options
+
+Newman-run supports several advanced options that can be passed via CLI or feed file:
+
+#### Global Variables
+```
+newman-run -c ./collection/test.json -g ./globals/global_vars.json
+```
+
+#### Timeouts
+```
+# Set request timeout to 30 seconds
+newman-run -c ./collection/test.json --timeout-request 30000
+
+# Set script timeout to 10 seconds
+newman-run -c ./collection/test.json --timeout-script 10000
+
+# Set global timeout for entire run
+newman-run -c ./collection/test.json --timeout 300000
+```
+
+#### Bail on First Failure
+Stop execution on the first test failure:
+```
+newman-run -f ./feed/feed.json --bail
+```
+
+#### Delay Between Requests
+Add a delay (in ms) between requests:
+```
+newman-run -c ./collection/test.json --delay-request 500
+```
+
+#### Run Specific Folder
+Run only a specific folder from the collection:
+```
+newman-run -c ./collection/test.json --folder "User API Tests"
+```
+
+#### Feed File Options
+All these options can also be specified per-run in the feed file:
+```
+{
+    "runs":[
+        {
+            "collection": "./collections/test.json",
+            "environment": "./environment/test.json",
+            "globals": "./globals/global_vars.json",
+            "timeout": 300000,
+            "timeoutRequest": 30000,
+            "bail": true,
+            "folder": "Smoke Tests"
+        }
+    ]
+}
 ```
 
 ### Remove previous run report files
