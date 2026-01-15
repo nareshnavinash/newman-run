@@ -221,6 +221,63 @@ You can configure the list of reporters to use:
 newman-run -f <./feed/<feed_file.json> -R cli html htmlextra json allure
 ```
 
+### Advanced Newman Options
+
+Newman-run supports several advanced options that can be passed via CLI or feed file:
+
+#### Global Variables
+```
+newman-run -c ./collection/test.json -g ./globals/global_vars.json
+```
+
+#### Timeouts
+```
+# Set request timeout to 30 seconds
+newman-run -c ./collection/test.json --timeout-request 30000
+
+# Set script timeout to 10 seconds
+newman-run -c ./collection/test.json --timeout-script 10000
+
+# Set global timeout for entire run
+newman-run -c ./collection/test.json --timeout 300000
+```
+
+#### Bail on First Failure
+Stop execution on the first test failure:
+```
+newman-run -f ./feed/feed.json --bail
+```
+
+#### Delay Between Requests
+Add a delay (in ms) between requests:
+```
+newman-run -c ./collection/test.json --delay-request 500
+```
+
+#### Run Specific Folder
+Run only a specific folder from the collection:
+```
+newman-run -c ./collection/test.json --folder "User API Tests"
+```
+
+#### Feed File Options
+All these options can also be specified per-run in the feed file:
+```
+{
+    "runs":[
+        {
+            "collection": "./collections/test.json",
+            "environment": "./environment/test.json",
+            "globals": "./globals/global_vars.json",
+            "timeout": 300000,
+            "timeoutRequest": 30000,
+            "bail": true,
+            "folder": "Smoke Tests"
+        }
+    ]
+}
+```
+
 ### Remove previous run report files
 
 In order to remove the report files that are generated in the previous run, run command of `-r` can be added. This will clear the reports folder and then will have only the files that are corresponding to the current run.

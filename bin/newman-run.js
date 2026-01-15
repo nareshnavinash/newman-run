@@ -29,15 +29,36 @@ const yargs = require("yargs");
 			.option("c", { alias: "collection", describe: "Collection file path", type: "string"})
 			.option("e", { alias: "environment", describe: "Environment file path", type: "string"})
 			.option("d", { alias: "iteration-data", describe: "Iteration data file path (CSV/JSON) for data-driven testing", type: "string"})
+			.option("g", { alias: "globals", describe: "Global variables file path", type: "string"})
 			.option("s", { alias: "synchronous", describe: "Run collections in sync way. Async by default", type: "string"})
 			.option("p", { alias: "parallel", describe: "Max parallel collections to run (0 = unlimited)", type: "number", default: 0})
+			.option("timeout", { describe: "Global timeout in ms for the entire collection run", type: "number"})
+			.option("timeout-request", { describe: "Timeout in ms for each request", type: "number"})
+			.option("timeout-script", { describe: "Timeout in ms for each script", type: "number"})
+			.option("delay-request", { describe: "Delay in ms between requests", type: "number", default: 0})
+			.option("bail", { describe: "Stop on first test failure", type: "boolean", default: false})
+			.option("folder", { describe: "Run only a specific folder from collection", type: "string"})
 			.option("r", { alias: "remove", describe: "To remove the files from reporting directory"})
 			.option("R", { alias: "reporters", describe: "To override reporters list", type: "array"})
 			.option("v", { alias: "version", describe: "Current version for the newman-run package"})
 			.check(argv => { if(argv.f == undefined && argv.c == undefined && argv.r == undefined) { console.log(file_error_message); return false } else { return true }})
 			.argv
 
-	const NC = new NewmanConfig(options.reporters, { concurrency: options.parallel })
+	// Build global Newman options from CLI
+	const globalNewmanOptions = {
+		globals: options.globals,
+		timeout: options.timeout,
+		timeoutRequest: options['timeout-request'],
+		timeoutScript: options['timeout-script'],
+		delayRequest: options['delay-request'],
+		bail: options.bail,
+		folder: options.folder
+	}
+
+	const NC = new NewmanConfig(options.reporters, {
+		concurrency: options.parallel,
+		newmanOptions: globalNewmanOptions
+	})
 
 	if (options.remove) {
 		await NC.clearResultsFolder()
