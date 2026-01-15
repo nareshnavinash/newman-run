@@ -53,6 +53,7 @@ This package is aimed at resolving the above particular issue along with allure 
 * Allure reports along with newman's default CLI, HTML, HTMLEXTRA & JSON
 * Jenkins Integration
 * Docker Execution
+* Cross-platform (Windows, macOS, Linux)
 
 
 ## Pending
