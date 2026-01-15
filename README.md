@@ -61,6 +61,10 @@ This package is aimed at resolving the above particular issue along with allure 
 
 
 ## Installation
+
+### Prerequisites
+* **Node.js >= 16** is required (Newman 6.x requirement)
+
 The easiest way to install Newman-Run is using NPM. If you have Node.js installed, it is most likely that you have NPM installed as well.
 
 ```
