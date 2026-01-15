@@ -28,6 +28,7 @@ const yargs = require("yargs");
 			.option("f", { alias: "feed", describe: "Feed file path", type: "string"})
 			.option("c", { alias: "collection", describe: "Collection file path", type: "string"})
 			.option("e", { alias: "environment", describe: "Environment file path", type: "string"})
+			.option("d", { alias: "iteration-data", describe: "Iteration data file path (CSV/JSON) for data-driven testing", type: "string"})
 			.option("s", { alias: "synchronous", describe: "Run collections in sync way. Async by default", type: "string"})
 			.option("r", { alias: "remove", describe: "To remove the files from reporting directory"})
 			.option("R", { alias: "reporters", describe: "To override reporters list", type: "array"})
@@ -57,7 +58,9 @@ const yargs = require("yargs");
 
 		// Run single collection
 		if (hasCollection) {
-			await NC.runCollectionAsync(options.collection, options.environment)
+			await NC.runCollectionAsync(options.collection, options.environment, {
+				iterationData: options['iteration-data']
+			})
 		}
 
 		// Print summary

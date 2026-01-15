@@ -56,7 +56,6 @@ This package is aimed at resolving the above particular issue along with allure 
 
 
 ## Pending
-* Need to handle tests with iteration data.
 * Need to add multi-thread run. (To parallelize the test run **Help Needed**)
 
 
@@ -110,6 +109,31 @@ The feed file is the core structure for this package to function. In the feed fi
 ```
 
 If we have only collections that need to be run as part of the test, then have `collection` alone. If we have collection and environment files, then we need to specify both `collection` and `environment` in json format.
+
+#### Iteration Data (Data-Driven Testing)
+
+You can also specify iteration data files (CSV or JSON) for data-driven testing:
+
+```
+{
+    "runs":[
+        {
+            "collection": "./collections/test_scripts.postman_collection.json",
+            "iterationData": "./data/test_data.csv"
+        },
+        {
+            "collection": "./collections/api_tests.postman_collection.json",
+            "environment": "./environment/test_environment.json",
+            "iterationData": "./data/api_data.json"
+        }
+    ]
+}
+```
+
+For single collection runs, you can use the `-d` flag:
+```
+newman-run -c ./collection/test.json -d ./data/test_data.csv
+```
 
 When we initiate the tests, the `runs` array will be iterated and all the tests will be run using `newman` package. 
 
