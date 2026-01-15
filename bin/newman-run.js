@@ -43,19 +43,35 @@ const yargs = require("yargs");
 	if (options.version) {
 		console.log(version)
 	}
-	if (options.feed != undefined && options.collection == undefined && options.synchronous != undefined) {
-		await NC.loopRun(options.feed, true)
-	} else if (options.feed != undefined && options.collection == undefined && options.synchronous == undefined) {
-		NC.loopRun(options.feed, false)
-	} else if (options.collection != undefined && options.feed == undefined && options.synchronous != undefined) {
-		await NC.runCollectionSync(options.collection, options.environment)
-	} else if (options.collection != undefined && options.feed == undefined && options.synchronous == undefined) {
-		NC.runCollection(options.collection, options.environment)
-	} else if (options.feed != undefined && options.collection != undefined && options.synchronous != undefined) {
-		await NC.loopRun(options.feed, true)
-		await NC.runCollectionSync(options.collection, options.environment)
-	} else if (options.feed != undefined && options.collection != undefined && options.synchronous == undefined) {
-		NC.loopRun(options.feed, false)
-		NC.runCollection(options.collection, options.environment)
+
+	// Determine if we have collections to run
+	const hasFeed = options.feed != undefined
+	const hasCollection = options.collection != undefined
+	const isSync = options.synchronous != undefined
+
+	if (hasFeed || hasCollection) {
+		// Run feed file collections
+		if (hasFeed) {
+			await NC.loopRun(options.feed, isSync)
+		}
+
+		// Run single collection
+		if (hasCollection) {
+			await NC.runCollectionAsync(options.collection, options.environment)
+		}
+
+		// Print summary
+		const results = NC.getResults()
+		console.log('\n' + chalk.bold('='.repeat(80)))
+		console.log(chalk.bold('Test Run Summary:'))
+		console.log(chalk.green(`  Passed: ${results.passed}`))
+		console.log(chalk.red(`  Failed: ${results.failed}`))
+		console.log(chalk.bold('='.repeat(80)) + '\n')
+
+		// Exit with proper code for CI/CD
+		if (NC.hasFailures()) {
+			console.log(chalk.red.bold('Exiting with code 1 due to test failures'))
+			process.exit(1)
+		}
 	}
 })();
